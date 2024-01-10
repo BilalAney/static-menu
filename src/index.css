@@ -45,8 +45,10 @@ html {
   width: 60%;
   height: max-content;
   padding: 35px;
+  margin: auto;
   row-gap: 60px;
   column-gap: 60px;
+  justify-content: center;
 }
 
 .pizza {
@@ -96,6 +98,22 @@ html {
   scale: 1.01;
   background-color: #e9bb24;
   cursor: pointer;
+}
+
+@media screen and (max-width: 590px) {
+  .menu-container {
+    row-gap: 100px;
+    text-align: center;
+  }
+  .pizza {
+    flex-direction: column;
+    place-items: center;
+    height: max-content;
+  }
+  .pizza img {
+    width: 40%;
+    height: auto;
+  }
 }
 
 /* 
