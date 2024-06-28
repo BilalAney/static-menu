@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -38,8 +40,8 @@ const pizzaData = [
     soldOut: true,
   },
   {
-    name: "Pizza Prosciutto",
-    ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
+    name: "Pizza chicken",
+    ingredients: "Tomato, mozarella, chicken, aragula, and burrata cheese",
     price: 18,
     photoName: "pizzas/prosciutto.jpg",
     soldOut: false,
@@ -65,23 +67,37 @@ function Pizza(props) {
       }
     : {};
 
+  //we will wrap the component with a button element, to increase the accessability
   return (
-    <div className="pizza" style={styles}>
+    <button className="pizza" style={styles}>
       <img src={props.photo} alt="Pizza" />
       <div className="pizza--info">
         <h2>{props.name}</h2>
         <h3>{(props.sold && "SOLD OUT") || `${props.price}$`}</h3>
         <p>{props.ingredients}</p>
       </div>
-    </div>
+    </button>
   );
 }
 
 function Header() {
-  return <h1 className="header">Fast React Pizza Co.</h1>;
+  return (
+    <div className="header-container">
+      <h1 className="header">Fast React Pizza Co.</h1>
+      <p className="header--text">
+        We are proud of what we provide. <br />
+        Here in our fancy restourant, you will taste the sophistication, the
+        food <br />
+        that you really deserve and a rich experiment
+      </p>
+      <h2 className="header--menu">THE MENU</h2>
+    </div>
+  );
 }
 
 function Menu() {
+  //if all pizzas sold out then return false not true (!true)
+  const isPizzaAvailable = !pizzaData.every((ele) => ele.soldOut);
   const pizzaElements = pizzaData.map((ele) => (
     <Pizza
       photo={ele.photoName}
@@ -92,13 +108,31 @@ function Menu() {
     />
   ));
 
-  return <div className="menu-container">{pizzaElements}</div>;
+  return (
+    <div className="menu-container">
+      {(isPizzaAvailable && pizzaElements) || (
+        <p className="notAvailable">No Pizza Available</p>
+      )}
+    </div>
+  );
 }
 
 function Footer() {
+  let date = new Date();
+  let hour = date.getHours();
+  let isOpen = hour <= 22 && hour >= 12;
   return (
     <div className="footer">
-      <p>We're open till 22:00, visit as ASAP...</p>
+      {isOpen ? (
+        <p>We're open till 22:00, visit us ASAP...</p>
+      ) : (
+        <p>
+          We're currently closed, come and visit us or order online tomorrow!{" "}
+          <br />
+          We're waiting for you at 12:00!
+        </p>
+      )}
+
       <button className="order--button">ORDER NOW!</button>
     </div>
   );
